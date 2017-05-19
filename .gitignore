@@ -9,4 +9,4 @@ file
 node_modules
 .D_Store
 others
-release.sh
+release.ssh
