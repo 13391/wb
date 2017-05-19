@@ -1,5 +1,6 @@
 out
 file
+db
 
 *.jar
 *.war
