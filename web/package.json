@@ -21,7 +21,14 @@
   },
   "homepage": "https://github.com/13391/wb#readme",
   "dependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-latest": "^6.24.1",
+    "koa-router": "^7.1.1",
     "koa-static": "^3.0.0",
     "mysql": "^2.13.0"
+  },
+  "devDependencies": {
+    "webpack": "^2.5.1"
   }
 }

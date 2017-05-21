@@ -129,7 +129,12 @@ public class TweetInfo {
 
         if (tweets.size() > 0) {
             for (Tweet tweet : tweets) {
-                tweetImpl.insert(tweet);
+                try {
+                    tweetImpl.insert(tweet);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e("crawler tweets error");
+                }
             }
         }
     }
@@ -141,13 +146,17 @@ public class TweetInfo {
         ResultSet resultSet = null;
         try {
             connection = cf.getConnection();
-            String sql = "SELECT uid FROM user_entrance LIMIT 0, 300000";
+            String sql = "SELECT uid FROM user_entrance";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                long uid = resultSet.getLong("uid");
-                crawler(uid, connection, false);
+                try {
+                    long uid = resultSet.getLong("uid");
+                    crawler(uid, connection, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

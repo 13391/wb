@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cmn">
+<head>
+    <meta charset="UTF-8">
+    <title>网络信息抓取以及处理系统-可视化平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <!-- css -->
+    <link rel="stylesheet" href="./style/normalize.css">
+    <link rel="stylesheet" href="./style/svg.css">
+    <link rel="stylesheet" href="./style/main.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <ul class="list-userinfo">
+                <li class="item">用户性别</li>
+                <li class="item">用户区域</li>
+                <li class="item">用户公司</li>
+                <li class="item">用户学校</li>
+                <li class="item">用户学历分布</li>
+                <li class="item">用户信用分布</li>
+                <li class="item">用户标签</li>
+            </ul>
+        </header>
+        <section class="charts">
+            <section class="chart-gender">
+                <div class="svg-container"></div>
+            </section>
+            <section class="chart-address">
+                <div class="svg-container"></div>
+            </section>
+            <section class="chart-company">
+                <div class="svg-container"></div>
+            </section>
+            <section class="chart-school">
+                <div class="svg-container"></div>
+            </section>
+            <section class="chart-education">
+                <div class="svg-container"></div>
+            </section>
+            <section class="chart-credit">
+                <div class="svg-container"></div>
+            </section>
+        </section>
+    </div>
+    <script src="script/lib/d3.v3.js"></script>
+    <script src="script/lib/zepto.js"></script>
+    <script src="script/template.js"></script>
+    <script src="script/lib/require.js" data-main="script/main"></script>
+</body>
+</html>

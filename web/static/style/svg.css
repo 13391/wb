@@ -1,0 +1,26 @@
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-size: 10px;
+    fill: #233;
+}
+
+.rect {
+    fill: steelblue;
+}
+
+.rect-text {
+    font-size: 16px;
+    fill: white;
+    text-anchor: middle;
+}
+
+.company-text {
+    text-anchor: middle;
+    font-size: 10px;
+}

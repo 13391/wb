@@ -9,7 +9,6 @@ const pool = mysql.createPool({
 });
 
 let query = (sql, values) => {
-    
     console.log(sql);
     return new Promise((resolve, reject) => {
         pool.getConnection((error, connection) => {

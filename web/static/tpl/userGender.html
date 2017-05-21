@@ -1,0 +1,17 @@
+<div class="description">
+    <div class="title">用户性别</div>
+    <div class="detail">
+        <h3>在{{total}}位用户中</h3>
+        {{each groups as group}}
+            {{if group.gender == 1}} 
+            <p>男性有{{group.count}}人，占比<span class="keyword">{{(group.rate * 100).toFixed(0)}}%</span></p>
+            {{/if}}
+            {{if group.gender == 2}} 
+            <p>女性有{{group.count}}人，占比<span class="keyword">{{(group.rate * 100).toFixed(0)}}%</span></p>
+            {{/if}}
+            {{if group.gender == 0}} 
+            <p>不明性别的有{{group.count}}人，占比<span class="keyword">{{(group.rate * 100).toFixed(0)}}%</span></p>
+            {{/if}}
+        {{/each}}
+    </div>
+</div>

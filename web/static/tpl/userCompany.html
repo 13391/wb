@@ -1,0 +1,10 @@
+<div class="description">
+    <div class="title">用户所在的公司</div>
+    <div class="detail">
+        <p>用户集合中所在公司人数前三的公司是
+        {{each groups as group idx}}
+            {{if idx < 3}}<span class="keyword">{{group.company}}</span><span>[{{group.count}}]人</span>{{/if}}
+        {{/each}}
+        </p>
+    </div>
+</div>

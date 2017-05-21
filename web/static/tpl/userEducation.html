@@ -1,0 +1,9 @@
+<div class="description">
+    <div class="title">用户受教育程度</div>
+    <div class="detail">
+        <h3>在{{total}}位用户中</h3>
+        {{each groups as group}}
+        <p>{{group.education}}有{{group.count}}人，占比{{(group.rate * 100).toFixed(2)}}%</p>
+        {{/each}}
+    </div>
+</div>
