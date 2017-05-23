@@ -13,17 +13,9 @@ define(function () {
 
     function render(data) {
 
-        var sum = 0;
         data = JSON.parse(data);
-        data.forEach(function (i) {
-            sum += i.count;
-        });
-        data.forEach(function (item) {
-            item.rate = (item.count / sum).toFixed(3);
-        });
-
         var chartData = [];
-        data.forEach(function (i) {
+        data.groups.forEach(function (i) {
             chartData.push(i.count);
         });
 
@@ -32,6 +24,9 @@ define(function () {
             radius = Math.min(width, height) / 2 - 10;
 
         var color = d3.scale.category10();
+        data.groups.forEach(function (item, idx) {
+            item.color = color(idx);
+        });
 
         var arc = d3.svg.arc()
             .outerRadius(radius);
@@ -87,10 +82,7 @@ define(function () {
             };
         }
 
-        $('.chart-education').append(template('userEducation', {
-            total: sum,
-            groups: data
-        }));
+        $('.chart-education').append(template('userEducation', data));
     }
 
     return {

@@ -4,13 +4,13 @@
         <h3>在{{total}}位用户中</h3>
         {{each groups as group}}
             {{if group.gender == 1}} 
-            <p>男性有{{group.count}}人，占比<span class="keyword">{{(group.rate * 100).toFixed(0)}}%</span></p>
+            <p><span style="color: {{group.color}}; font-weight: bold">男性</span> 有{{group.count}}人，占比<span class="keyword">{{(group.rate * 100).toFixed(0)}}%</span></p>
             {{/if}}
             {{if group.gender == 2}} 
-            <p>女性有{{group.count}}人，占比<span class="keyword">{{(group.rate * 100).toFixed(0)}}%</span></p>
+            <p><span style="color: {{group.color}}; font-weight: bold">女性</span> 有{{group.count}}人，占比<span class="keyword">{{(group.rate * 100).toFixed(0)}}%</span></p>
             {{/if}}
             {{if group.gender == 0}} 
-            <p>不明性别的有{{group.count}}人，占比<span class="keyword">{{(group.rate * 100).toFixed(0)}}%</span></p>
+            <p><span style="color: {{group.color}}; font-weight: bold">不明性别</span> 的有{{group.count}}人，占比<span class="keyword">{{(group.rate * 100).toFixed(0)}}%</span></p>
             {{/if}}
         {{/each}}
     </div>

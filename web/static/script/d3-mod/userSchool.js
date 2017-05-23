@@ -29,8 +29,8 @@ define(function () {
         };
 
         var dataset = [];
-        var schools = []
-        data.forEach(function (item) {
+        var schools = [];
+        data.groups.forEach(function (item) {
             dataset.push(item.count);
             schools.push(item.school);
         });
@@ -54,13 +54,19 @@ define(function () {
             .scale(yScale)
             .orient('left');
 
-        var rectPadding = 4;
-
+        var rectPadding = 10;
+        var colors = d3.scale.category20();
+        data.groups.forEach(function (item, idx) {
+            item.color = colors(idx);
+        });
         var rects = svg.selectAll('.rect')
             .data(dataset)
             .enter()
             .append('rect')
             .attr('class', 'rect')
+            .attr('fill', function (d, i) {
+                return colors(i);
+            })
             .attr('transform', 'translate(' + padding.left + ',' + padding.top + ')')
             .attr('x', function (d, i) {
                 return xScale(i) + rectPadding / 2;
@@ -106,7 +112,7 @@ define(function () {
             .call(yAxis);
 
 
-        $('.chart-company').append(template('userSchool', {}));
+        $('.chart-school').append(template('userSchool', data));
     }
 
     return {

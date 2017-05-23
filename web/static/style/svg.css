@@ -1,22 +1,37 @@
 .axis path,
 .axis line {
     fill: none;
-    stroke: black;
+    stroke: fefefe;
     shape-rendering: crispEdges;
 }
 
 .axis text {
     font-size: 10px;
-    fill: #233;
+    fill: #999;
+}
+
+text {
+    fill: #fefefe;
+    font-size: 16px;
 }
 
 .rect {
-    fill: steelblue;
+    /*fill: steelblue;*/
+    transition: fill .5s ease-in;
+}
+.rect:hover {
+    fill: yellow;
+}
+.arc {
+    transition: fill .5s ease-in;
+}
+.arc:hover {
+    fill: #0366d6;
 }
 
 .rect-text {
     font-size: 16px;
-    fill: white;
+    fill: #999;
     text-anchor: middle;
 }
 

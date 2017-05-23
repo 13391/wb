@@ -1,11 +1,11 @@
 /**
- * 用户公司绘制模块
+ * 用户标签
  */
 
 define(function () {
     function draw() {
         $.ajax({
-            url: 'api/getUserCompany.json',
+            url: 'api/getUserTag.json',
             success: render
         });
     }
@@ -16,23 +16,24 @@ define(function () {
         var width = 800;
         var height = 400;
 
-        var svg = d3.select('.chart-company .svg-container')
+        //在 body 里添加一个 SVG 画布
+        var svg = d3.select('.chart-tag')
             .append('svg')
             .attr('width', width)
             .attr('height', height);
 
+        //画布周边的空白
         var padding = {
             left: 30,
             right: 30,
             top: 20,
-            bottom: 20
+            bottom: 50
         };
 
+        //定义一个数组
         var dataset = [];
-        var companys = []
-        data.groups.forEach(function (item) {
-            dataset.push(item.count);
-            companys.push(item.company);
+        data.groups.forEach(function(i) {
+            dataset.push(i.count);
         });
 
         var xScale = d3.scale.ordinal()
@@ -48,8 +49,9 @@ define(function () {
             .orient('bottom')
             .tickValues(d3.range(dataset.length))
             .tickFormat(function(d, i) {
-                return d + 1 + ' [' + companys[i] + ']';
+                return (d + 1) + ' [' + data.groups[i].tags + ']';
             });
+
         var yAxis = d3.svg.axis()
             .scale(yScale)
             .orient('left');
@@ -57,6 +59,9 @@ define(function () {
         var rectPadding = 10;
 
         var colors = d3.scale.category10();
+        data.groups.forEach(function (item, idx) {
+            item.color = colors(idx);
+        });
         var rects = svg.selectAll('.rect')
             .data(dataset)
             .enter()
@@ -77,6 +82,7 @@ define(function () {
                 return height - padding.top - padding.bottom - yScale(d);
             });
 
+        //添加文字元素
         var texts = svg.selectAll('.rect-text')
             .data(dataset)
             .enter()
@@ -87,29 +93,22 @@ define(function () {
                 return xScale(i) + rectPadding / 2;
             })
             .attr('y', function (d) {
-                return yScale(d);
+                return yScale(d) - 5;
             })
             .attr('dx', function () {
                 return (xScale.rangeBand() - rectPadding) / 2;
             })
-            .attr('dy', function (d) {
-                return 20;
-            })
             .text(function (d) {
                 return d;
             });
-
         svg.append('g')
             .attr('class', 'axis')
             .attr('transform', 'translate(' + padding.left + ',' + (height - padding.bottom) + ')')
             .call(xAxis);
 
-        svg.append('g')
-            .attr('class', 'axis')
-            .attr('transform', 'translate(' + padding.left + ',' + padding.top + ')')
-            .call(yAxis);
 
-        $('.chart-company').append(template('userCompany', data));
+
+        $('.chart-tag').append(template('userTag', data));
     }
 
     return {

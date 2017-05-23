@@ -60,11 +60,15 @@ define(function () {
 
         var rectPadding = 4;
 
+        var colors = d3.scale.category10();
         var rects = svg.selectAll('.rect')
             .data(dataset)
             .enter()
             .append('rect')
             .attr('class', 'rect')
+            .attr('fill', function (d, i) {
+                return colors(i);
+            })
             .attr('transform', 'translate(' + padding.left + ',' + padding.top + ')')
             .attr('x', function (d, i) {
                 return xScale(i) + rectPadding / 2;

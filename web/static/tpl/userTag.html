@@ -1,0 +1,11 @@
+<div class="description">
+    <div class="title">用户标签</div>
+    <div class="detail">
+        <p>在用户集合中具有标签共有 <span class="keyword">{{total}}</span> 位用户，共有 <span class="keyword">{{tags}} </span>种不同的标签分类，其中相同标签用户数量前三的分别为：</p>
+        {{each groups as group idx}}
+        {{if idx < 3}}<span> <span style="color: {{group.color}}; font-weight: bold">{{group.tags}}</span> 有{{group.count}}人，占比 <span class="keyword">{{(group.rate * 100).toFixed(2)}}%</span></span>
+        {{if idx !== 2}}、{{/if}}
+        {{/if}}
+        {{/each}}
+    </div>
+</div>

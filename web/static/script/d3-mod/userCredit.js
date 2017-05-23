@@ -1,48 +1,88 @@
+/**
+ * 用户信用情况
+ */
+
 define(function () {
+
     function draw() {
         $.ajax({
-            url: 'api/getUserEducation.json',
+            url: 'api/getUserCredit.json',
             success: render
         });
     }
 
     function render(data) {
+
         data = JSON.parse(data);
-        var width = 500;
-        var height = 500;
-        var svg = d3.select('.chart-credit')
-            .append('svg')
-            .attr('width', width)
-            .attr('height', height);
-        var padding = {
-            left: 30,
-            right: 30,
-            top: 20,
-            bottom: 20
-        };
-        var barHeight = 20;
-        var dataset = [];
-        data.forEach(function(item) {
-            dataset.push(item.count);
+        var chartData = [];
+        data.groups.forEach(function (i) {
+            chartData.push(i.count);
         });
 
-        var scale = d3.scale.linear().domain([0, d3.max(dataset)]).range([0, width - padding.left - padding.right]);
+        var width = 350,
+            height = 350,
+            radius = Math.min(width, height) / 2 - 10;
 
-        svg.selectAll('.rect')
-            .data(data)
-            .enter()
-            .append('rect')
-            .attr({
-                class: 'rect',
-                x: padding.left,
-                y: function(d, i) {
-                    return i*barHeight;
-                },
-                width: function(d) {
-                    return scale(d.count);
-                },
-                height: barHeight
-            });
+        var color = d3.scale.category10();
+
+        data.groups.forEach(function (item, idx) {
+            item.color = color(idx);
+        });
+        var arc = d3.svg.arc()
+            .outerRadius(radius);
+
+        var pie = d3.layout.pie();
+
+        var svg = d3.select('.chart-credit .svg-container').append('svg')
+            .datum(chartData)
+            .attr('width', width)
+            .attr('height', height)
+            .append('g')
+            .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+        var arcs = svg.selectAll('g.arc')
+            .data(pie)
+            .enter().append('g')
+            .attr('class', 'arc');
+
+        arcs.append('path')
+            .attr('fill', function (d, i) {
+                return color(i);
+            })
+            .transition()
+            .ease('bounce')
+            .duration(2000)
+            .attrTween('d', tweenPie)
+            .transition()
+            .ease('elastic')
+            .delay(function (d, i) {
+                return 2000 + i * 50;
+            })
+            .duration(750)
+            .attrTween('d', tweenDonut);
+
+        function tweenPie(b) {
+            b.innerRadius = 0;
+            var i = d3.interpolate({
+                startAngle: 0,
+                endAngle: 0
+            }, b);
+            return function (t) {
+                return arc(i(t));
+            };
+        }
+
+        function tweenDonut(b) {
+            b.innerRadius = radius * .5;
+            var i = d3.interpolate({
+                innerRadius: 0
+            }, b);
+            return function (t) {
+                return arc(i(t));
+            };
+        }
+
+        $('.chart-credit').append(template('userCredit', data));
     }
 
     return {

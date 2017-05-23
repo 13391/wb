@@ -3,7 +3,7 @@
     <div class="detail">
         <h3>在{{total}}位用户中</h3>
         {{each groups as group}}
-        <p>{{group.education}}有{{group.count}}人，占比{{(group.rate * 100).toFixed(2)}}%</p>
+        <p><span style="color: {{group.color}}; font-weight: bold">{{group.education}}</span> 有{{group.count}}人，占比 <span class="keyword">{{(group.rate * 100).toFixed(2)}}%</span></p>
         {{/each}}
     </div>
 </div>
