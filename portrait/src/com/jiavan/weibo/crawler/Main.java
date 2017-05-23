@@ -1,10 +1,6 @@
 package com.jiavan.weibo.crawler;
 
-import com.jiavan.weibo.crawler.crawler.TweetInfo;
-import com.jiavan.weibo.crawler.crawler.UserDepth;
-import com.jiavan.weibo.crawler.crawler.UserInfo;
-import com.jiavan.weibo.crawler.crawler.UserList;
-import com.jiavan.weibo.crawler.util.Log;
+import com.jiavan.weibo.util.Log;
 
 /**
  * crawler entrance

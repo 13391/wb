@@ -1,0 +1,14 @@
+<div class="userinfo" style="background-image: url({{cover_image_phone}})">
+    <div class="avatar">
+        <a href="{{profile_url}}"><img src="{{profile_image_url}}"></a>
+    </div>
+    <ul>
+        <li><span>ID</span> {{id}}</li>
+        <li><span>用户名</span> {{screen_name}}</li>
+        <li><span>简介</span> {{description}}</li>
+        <li><span>性别</span> {{if gender=='m'}}男{{else}}女{{/if}}</li>
+        <li><span>等级</span> {{urank}}</li>
+        <li><span>粉丝</span> {{followers_count}}</li>
+        <li><span>关注</span> {{follow_count}}</li>
+    </ul>
+</div>

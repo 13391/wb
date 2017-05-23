@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-cmn">
+<head>
+    <meta charset="UTF-8">
+    <title>网络信息抓取以及处理系统-可视化平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <!-- css -->
+    <link rel="stylesheet" href="./style/normalize.css">
+    <link rel="stylesheet" href="./style/svg.css">
+    <link rel="stylesheet" href="./style/main.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header"><h1>微博用户信息抓取及处理-数据可视化平台</h1></header>
+        <ul class="list-nav">
+            <li class="item active"><a href="#user">用户信息</a></li>
+            <li class="item"><a href="#gender">用户性别</a></li>
+            <li class="item"><a href="#address">用户区域</a></li>
+            <li class="item"><a href="#company">用户公司</a></li>
+            <li class="item"><a href="#education">学历分布</a></li>
+            <li class="item"><a href="#school">用户学校</a></li>
+            <li class="item"><a href="#tag">用户标签</a></li>
+            <li class="item"><a href="#credit">信用分布</a></li>
+        </ul>
+        <section class="charts">
+            <section id="flare" class="chart-flare">
+                <div class="description">
+                    <h3>系统以个人用户关注列表为入口，广度遍历用户关注列表，爬虫采集超过 <span class="keyword">300000</span> 位微博用户基本信息，<span class="keyword">1000000</span> 条微博内容记录，1GB+文本数据，以丰富的图表进行可视化展现</h3>
+                </div>
+                <div class="svg-container"></div>
+            </section>
+            <section id="user" class="chart-user">
+                <div class="header">
+                    <input type="text" value="甲烷艾特"><span class="search">search</span>
+                </div>
+                <div class="content"></div>
+            </section>
+            <section id="gender" class="chart-gender">
+                <div class="svg-container"></div>
+            </section>
+            <section id="address" class="chart-address">
+                <div class="svg-container"></div>
+            </section>
+            <section id="company" class="chart-company">
+                <div class="svg-container"></div>
+            </section>
+            <section id="education" class="chart-education">
+                <div class="svg-container"></div>
+            </section>
+            <section id="school" class="chart-school">
+                <div class="svg-container"></div>
+            </section>
+            <section id="tag" class="chart-tag">
+                <div class="svg-container"></div>
+            </section>
+            <section id="credit" class="chart-credit">
+                <div class="svg-container"></div>
+            </section>
+            <section id="source" class="chart-source">
+                <div class="svg-container"></div>
+            </section>
+        </section>
+    </div>
+    <script src="script/lib/d3.v3.js"></script>
+    <script src="script/lib/zepto.js"></script>
+    <script src="script/template.js"></script>
+    <script src="script/lib/require.js" data-main="script/main"></script>
+</body>
+</html>
