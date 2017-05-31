@@ -13,15 +13,10 @@ public class Main {
         if (args.length > 0) {
 
             String crawlerName = args[0];
-            int crawlIndex = 0;
-
-            if (args.length == 2) {
-                crawlIndex = Integer.parseInt(args[1]);
-            }
             if (crawlerName.equals("depth")) {
                 crawler.crawlDepth();
             } else if (crawlerName.equals("userinfo")) {
-                crawler.crawlUserInfo(crawlIndex);
+                crawler.crawlUserInfo();
             } else if (crawlerName.equals("tweets")) {
                 TweetInfo.main();
             }
@@ -48,9 +43,9 @@ public class Main {
         }
     }
 
-    private void crawlUserInfo(int crawlIndex) {
+    private void crawlUserInfo() {
         try {
-            UserInfo.main(false, crawlIndex);
+            UserInfo.main(false);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("crawlUserInfo error");

@@ -23,9 +23,12 @@ public class UserInfo extends Thread {
     private int index;
     private ConnectionFactory cf;
     private boolean isProxy;
+    private int userCount;
 
     public UserInfo(boolean isProxy) {
         this.isProxy = isProxy;
+        this.cf = ConnectionFactory.getInstance();
+        this.userCount = 0;
     }
     public UserInfo(int index, boolean isProxy) {
         this.index = index;
@@ -41,24 +44,33 @@ public class UserInfo extends Thread {
         UserImpl userImpl;
         String sql;
         try {
-            connection = cf.getConnection();
+            connection = this.cf.getConnection();
             userImpl = new UserImpl(connection);
 
-            sql = "SELECT uid FROM user_entrance LIMIT " + (this.index * 100000) +  ", 100000";
+            sql = "SELECT COUNT(*) AS count FROM user_entrance";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-            Long uid;
+            int count = 0, pageCount = 10000;
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
 
-            while (resultSet.next()) {
-                try {
-                    uid = resultSet.getLong("uid");
-                    user = UserInfo.getUserById(uid, this.isProxy);
-                    if (user != null) {
-                        userImpl.insert(user);
-                        Log.i(user.getUsername() + ", " + user.getUid());
+            for (int i = 0; i <= count / pageCount; i++) {
+                sql = "SELECT uid FROM user_entrance LIMIT " + (i * pageCount) +  ", " + pageCount;
+                resultSet = statement.executeQuery(sql);
+                System.out.println(sql);
+                while (resultSet.next()) {
+                    try {
+                        long uid = resultSet.getLong("uid");
+                        user = UserInfo.getUserById(uid, this.isProxy);
+                        if (user != null) {
+                            userImpl.insert(user);
+                            this.userCount++;
+                            Log.i("#" + this.userCount + " " + user.getUsername() + ", " + user.getUid());
+                        }
+                    } catch (Exception e) {
+                        Log.e(e.toString());
                     }
-                } catch (Exception e) {
-                    Log.e(e.toString());
                 }
             }
         } catch (Exception e) {
@@ -271,7 +283,7 @@ public class UserInfo extends Thread {
         return flag;
     }
 
-    public static void main(boolean isProxy, int crawlIndex) throws Exception {
+    public static void main(boolean isProxy) throws Exception {
         if (isProxy) {
             UserInfo[] workers = new UserInfo[30];
 
@@ -280,7 +292,7 @@ public class UserInfo extends Thread {
                 workers[i].start();
             }
         } else {
-            UserInfo userInfo = new UserInfo(crawlIndex, false);
+            UserInfo userInfo = new UserInfo(false);
             userInfo.run();
         }
     }
