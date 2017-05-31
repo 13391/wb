@@ -15,6 +15,7 @@ public class Weibo {
     public static final String URL_USER_PROFILE = "https://m.weibo.cn/container/getIndex?type=uid&value={USER_ID}";
     // public static final String URL_USER_INFO = "http://weibo.com/p/{PAGE_ID}/info?mod=pedit_more";
     public static final String URL_USER_LIST = "http://m.weibo.cn/api/container/getSecond?containerid=100505{USER_ID}_-_FOLLOWERS&page=2";
+    public static final String URL_USER_PAGE_INFO = "http://weibo.com/p/100505{USER_ID}/info";
 
 
     public static final int REQUEST_TICK = 0;
@@ -60,6 +61,14 @@ public class Weibo {
 
     public static String getUserListUrl(long userId, int pageNum) {
         return "http://m.weibo.cn/api/container/getSecond?containerid=100505" + userId + "_-_FOLLOWERS&page=" + pageNum;
+    }
+
+    public static String getUserInfoUrl(long uid) {
+        return "http://weibo.com/p/100505" + uid + "/info";
+    }
+
+    public static String getUserInfoUrl(long uid, String domain) {
+        return "http://weibo.com/p/" + domain + uid + "/info";
     }
 
     /**

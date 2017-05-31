@@ -26,9 +26,12 @@ public class User {
     private String job;
     private String tags;
     private String loveState;
+    private String sexualOrientation;
+    private String constellation;
+    private String bloodType;
     private long lastModify;  // record last modify time
 
-    public User(long id, long uid, String avatar, String username, String homePage, int gender, String address, String introduction, String company, String school, String blog, int level, String credit, long regTime, long followCount, long fansCount, long birthday, int tweetCount, String job, String tags, String loveState, long lastModify) {
+    public User(long id, long uid, String avatar, String username, String homePage, int gender, String address, String introduction, String company, String school, String blog, int level, String credit, long regTime, long followCount, long fansCount, long birthday, int tweetCount, String job, String tags, String loveState, long lastModify, String sexualOrientation, String constellation, String bloodType) {
         this.id = id;
         this.uid = uid;
         this.avatar = avatar;
@@ -51,6 +54,9 @@ public class User {
         this.tags = tags;
         this.loveState = loveState;
         this.lastModify = lastModify;
+        this.sexualOrientation = sexualOrientation;
+        this.constellation = constellation;
+        this.bloodType = bloodType;
     }
 
     public User() {}
@@ -231,6 +237,30 @@ public class User {
         this.tweetCount = tweetCount;
     }
 
+    public String getSexualOrientation() {
+        return this.sexualOrientation;
+    }
+
+    public void setSexualOrientation(String sexualOrientation) {
+        this.sexualOrientation = sexualOrientation;
+    }
+
+    public String getConstellation() {
+        return this.constellation;
+    }
+
+    public void setConstellation(String constellation) {
+        this.constellation = constellation;
+    }
+
+    public String getBloodType() {
+        return this.bloodType;
+    }
+
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -255,6 +285,9 @@ public class User {
                 ", job='" + job + '\'' +
                 ", tags='" + tags + '\'' +
                 ", loveState='" + loveState + '\'' +
+                ", sexualOrientation='" + sexualOrientation + '\'' +
+                ", constellation='" + constellation + '\'' +
+                ", bloodType='" + bloodType + '\'' +
                 ", lastModify=" + lastModify +
                 '}';
     }

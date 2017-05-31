@@ -31,7 +31,7 @@ public class UserImpl {
 
         String sql = "INSERT INTO user(uid, avatar, username, home_page, gender, address, introduction, " +
                 "company, school, blog, level, credit, reg_time, follow_count, fans_count, birthday, tweet_count, " +
-                "job, tags, last_modify) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "job, tags, last_modify, love_state, sexual_orientation, constellation, blood_type) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = connection.prepareStatement(sql);
         this.setStatement(statement, user);
@@ -128,5 +128,10 @@ public class UserImpl {
         } else {
             statement.setLong(20, user.getLastModify());
         }
+
+        statement.setString(21, user.getLoveState());
+        statement.setString(22, user.getSexualOrientation());
+        statement.setString(23, user.getConstellation());
+        statement.setString(24, user.getBloodType());
     }
 }

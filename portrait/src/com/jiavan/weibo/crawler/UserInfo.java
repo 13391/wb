@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +34,7 @@ public class UserInfo extends Thread {
         this.cf = ConnectionFactory.getInstance();
     }
 
-    public void run() {
+    public void runAPI() {
         Statement statement = null;
         ResultSet resultSet = null;
         Connection connection = null;
@@ -45,6 +46,7 @@ public class UserInfo extends Thread {
             userImpl = new UserImpl(connection);
 
             sql = "SELECT uid FROM user_entrance LIMIT " + (this.index * 100000) +  ", 100000";
+            System.out.println(sql);
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
             Long uid;
@@ -72,6 +74,56 @@ public class UserInfo extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void crawler() {
+        ConnectionFactory cf = ConnectionFactory.getInstance();
+        Statement statement = null;
+        ResultSet resultSet = null;
+        Connection connection = null;
+        UserImpl userImpl;
+        try {
+            connection = cf.getConnection();
+            userImpl = new UserImpl(connection);
+
+            String sql = "SELECT count(*) AS count FROM user_entrance";
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            int count, pageCount = 10000;
+            resultSet.next();
+            count = resultSet.getInt("count");
+
+            for (int i = 0; i <= count / pageCount; i++) {
+                sql = "SELECT * FROM user_entrance LIMIT " + (i * pageCount) + ", " + pageCount;
+                resultSet = statement.executeQuery(sql);
+                while (resultSet.next()) {
+                    long uid = resultSet.getLong("uid");
+                    try {
+                        User user = UserInfo.getUserByPage(uid, false);
+                        if (user != null) {
+                            userImpl.insert(user);
+                            Log.i(user.getUsername() + ", " + user.getUid());
+                        }
+                        Thread.sleep(1500);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e("Insert user info error");
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                resultSet.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     /**
@@ -271,17 +323,135 @@ public class UserInfo extends Thread {
         return flag;
     }
 
-    public static void main(boolean isProxy, int crawlIndex) throws Exception {
-        if (isProxy) {
-            UserInfo[] workers = new UserInfo[30];
+    public static User getUserByPage(Long userId, boolean isProxy) {
+        User user = new User();
+        String url = Weibo.getUserInfoUrl(userId);
+        String content = HttpRequest.get(url, isProxy);
 
-            for (int i = 0; i < 30; i++) {
-                workers[i] = new UserInfo(i, true);
-                workers[i].start();
+        // Regular rules
+        String regxInfo = "<span\\sclass=(.*?)pt_title(.*?)>([^<>]+)<\\\\/span>" +
+                "([^<>\\s])*<span\\sclass=(.*?)pt_detail(.*?)>([^<>]+)<\\\\/span>";
+        String regxTags = "<a\\s(.*?)\\s+class=(.*?)W_btn_tag(.*?)>([^<>]+)<\\\\/a>";
+        String regxSchool = "([^<>\\s])*<span\\sclass=(.*?)pt_detail(.*?)>([^<>]+)<a(.*?infedu.*?)>(.*?)<\\\\/a>(.*?)<\\\\/span>([^<>\\s])*";
+        String regxCompany = "([^<>\\s])*<span\\sclass=(.*?)pt_detail(.*?)>([^<>]+)<a(.*?infjob.*?)>(.*?)<\\\\/a>(.*?)<\\\\/span>([^<>\\s])*";
+        String regxDomain = "\\$CONFIG\\['domain'\\]='(.*?)'";
+
+        Matcher m = null;
+        try {
+            // User have a short homepage address and redirect to new url
+            if (content.contains("PCD_person_info")) {
+                if (content.contains("icon_verify_co_v")) {
+                    Log.i("This user type is company and will be skip");
+                    return null;
+                } else {
+                    m = Pattern.compile(regxDomain).matcher(content);
+                    if (m.find()) {
+                        url = Weibo.getUserInfoUrl(userId, m.group(1));
+                        Log.i("Request redirect to " + url);
+                        content = HttpRequest.get(url, isProxy);
+                    }
+                }
             }
-        } else {
-            UserInfo userInfo = new UserInfo(crawlIndex, false);
-            userInfo.run();
+        } catch (Exception e) {
+            Log.e("Parse user info page error");
         }
+
+        if (content.equals("") || content == null) {
+            return null;
+        }
+
+        try {
+            // Find weibo user basic information
+            // except eduction and tags
+            m = Pattern.compile(regxInfo).matcher(content);
+            while(m.find()){
+                String key = m.group(3);
+                String value = m.group(7).replaceAll("\\\\t|\\\\r|\\\\n", "");
+
+                if (key.equals("昵称：")) {
+                    user.setUsername(value);
+                } else if (key.equals("所在地：")) {
+                    user.setAddress(value);
+                } else if (key.equals("性别：")) {
+                    if (value.equals("男")) {
+                        user.setGender(1);
+                    } else if (key.equals("女")) {
+                        user.setGender(2);
+                    } else {
+                        user.setGender(0);
+                    }
+                } else if (key.equals("生日：")) {
+                    if (value.contains("座")) {
+                        user.setConstellation(value);
+                    } else {
+                        try {
+                            user.setBirthday(new SimpleDateFormat("yyyy年MM月dd日").parse(value).getTime());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(e.toString());
+                        }
+                    }
+                } else if (key.equals("简介：")) {
+                    user.setIntroduction(value);
+                } else if (key.equals("性取向：")) {
+                    user.setSexualOrientation(value);
+                } else if (key.equals("感情状况：")) {
+                    user.setLoveState(value);
+                } else if (key.equals("血型：")) {
+                    user.setBloodType(value);
+                }
+            }
+
+            // Find school in html code
+            m = Pattern.compile(regxSchool).matcher(content);
+            if (m.find()) {
+                String school = m.group(6);
+                user.setSchool(school);
+            }
+
+            // Find company in html code
+            m = Pattern.compile(regxCompany).matcher(content);
+            if (m.find()) {
+                String company = m.group(6);
+                user.setCompany(company);
+            }
+
+            // Find tags in html page
+            // tags will split by commas
+            m = Pattern.compile(regxTags).matcher(content);
+            ArrayList<String> tagList = new ArrayList<>();
+            String tags = "";
+            while (m.find()) {
+                try {
+                    String tag = m.group(4).replaceAll("\\\\t|\\\\r|\\\\n", "");
+                    tagList.add(tag);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(e.getMessage());
+                }
+            }
+            for (int i = 0; i < tagList.size(); i++) {
+                tags += tagList.get(i);
+                if (i < tagList.size() - 1) {
+                    tags += ",";
+                }
+            }
+            user.setTags(tags);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("Parse user info page error");
+        }
+
+        return user;
+    }
+
+    public static void main() throws Exception {
+//        UserInfo[] workers = new UserInfo[6];
+//
+//        for (int i = 0; i < workers.length; i++) {
+//            workers[i] = new UserInfo(i, false);
+//            workers[i].start();
+//        }
+//        UserInfo.crawler();
     }
 }

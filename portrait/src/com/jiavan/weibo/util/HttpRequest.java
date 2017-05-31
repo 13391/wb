@@ -34,7 +34,7 @@ public class HttpRequest {
 
         if (!isAnonymous) {
 //            requestHeaders.put("Cookie", Weibo.getCookie());
-            requestHeaders.put("Cookie", "_T_WM=dfd693abf33241c8df8773fd85d2eabc; H5_INDEX=3; H5_INDEX_TITLE=%E7%94%B2%E7%83%B7%E8%89%BE%E7%89%B9; ALF=1497029046; SCF=Avo9VsEzJnC7_QysMtXlMVTSxwwlmnD3Tb42OVi-_IK4W8YmwyUFnooGREfz_rJvbLCvrrcg8Cqr2KKIz1o0bd0.; SUB=_2A250FxT_DeRhGeVG7lcV-SrLwz6IHXVX-7y3rDV6PUJbktBeLUfdkW1O4E3-yF1fd1o079TB_MozuP-QuA..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWl.Ag.4MOQkUHLMwoumKUy5JpX5o2p5NHD95Q01h-fSh.XS0nEWs4Dqcj.i--NiK.Xi-zEi--NiKn0i-zNi--RiKn4i-i8i--NiKn4i-z4; SUHB=0G0egZZ3X2Q8MS; SSOLoginState=1494443183; M_WEIBOCN_PARAMS=featurecode%3D20000320%26oid%3D4104318392922949%26luicode%3D10000012%26lfid%3D1005053624304713_-_FOLLOWERS%26fid%3D1005051807790503_-_FOLLOWERS%26uicode%3D10000012");
+            requestHeaders.put("Cookie", "SINAGLOBAL=85894817700.2583.1491277662743; __gads=ID=036e8beeedb31cf6:T=1491283540:S=ALNI_Mb47-qhlgi9BfxRub6bDshLUTpdKA; _ga=GA1.2.130437670.1491280765; UM_distinctid=15be7602576828-06211a0477f662-396e7807-fa000-15be76025773a; YF-Page-G0=4c69ce1a525bc6d50f53626826cd2894; _s_tentry=-; Apache=9298119610514.89.1496219353372; ULV=1496219353536:14:5:1:9298119610514.89.1496219353372:1495441672842; YF-V5-G0=9717632f62066ddd544bf04f733ad50a; YF-Ugrow-G0=ad83bc19c1269e709f753b172bddb094; login_sid_t=2567714fd4d4743636464493536826de; UOR=,,login.sina.com.cn; WBStorage=02e13baf68409715|undefined; WBtopGlobal_register_version=4641949e9f3439df; SCF=Avo9VsEzJnC7_QysMtXlMVTSxwwlmnD3Tb42OVi-_IK49L0oDyNZEE_7iLDbFXtMvk3yJOAp13IlCVH54U18xuk.; SUB=_2A250KpSzDeRhGeVG7lcV-SrLwz6IHXVXQYF7rDV8PUNbmtANLXXmkW-JZLjnkxU0YUUEWlC5n9_lIP6T7g..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWl.Ag.4MOQkUHLMwoumKUy5JpX5K2hUgL.FoeRSK-X1KBN1hz2dJLoIEBLxKML1KBLBozLxKML1heLBoMLxKnL1h.LB.-LxKML1h.LBo.t; SUHB=0cSXJ-u3mq2vxT; ALF=1496850281; SSOLoginState=1496245481; un=18983663252");
         }
 
         try {
@@ -59,16 +59,15 @@ public class HttpRequest {
             responseCode = connection.getResponseCode();
 
             if (responseCode != 200) {
-                Log.i("################################################\n"
-                        + "##### Http response " + responseCode + " thread sleep " + Weibo.SLEEP_TICK + " ######\n"
-                        + "################################################\n");
-
                 if (responseCode == 403 || responseCode == 414) {
+                    Log.i("################################################\n"
+                            + "##### Http response " + responseCode + " thread sleep " + Weibo.SLEEP_TICK + " ######\n"
+                            + "################################################\n");
                     Thread.sleep(Weibo.SLEEP_TICK);
                 }
 
                 if (responseCode == 302) {
-                    System.exit(0);
+                    return "";
                 }
 
                 if (HttpRequest.requestCount > Weibo.MAX_RECONNECT) {

@@ -63,7 +63,8 @@ public class HttpRequestTest {
     public static void main(String[] args) {
         // HttpRequestTest test = new HttpRequestTest("https://m.weibo.cn/container/getIndex?containerid=2302831642632024_-_INFO");
         // test.getByProxy();
-
-        Log.i(HttpRequest.get("https://m.weibo.cn/api/container/getIndex?containerid=2304133855494782&page=3"));
+        try {
+            FileHandle.write("./file/test.html", HttpRequest.get("http://weibo.com/p/1005051191220232/info", false));
+        } catch (Exception e) {}
     }
 }

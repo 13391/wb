@@ -21,7 +21,7 @@ public class Main {
             if (crawlerName.equals("depth")) {
                 crawler.crawlDepth();
             } else if (crawlerName.equals("userinfo")) {
-                crawler.crawlUserInfo(crawlIndex);
+                crawler.crawlUserInfo();
             } else if (crawlerName.equals("tweets")) {
                 TweetInfo.main();
             }
@@ -48,9 +48,9 @@ public class Main {
         }
     }
 
-    private void crawlUserInfo(int crawlIndex) {
+    private void crawlUserInfo() {
         try {
-            UserInfo.main(false, crawlIndex);
+            UserInfo.main();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("crawlUserInfo error");
