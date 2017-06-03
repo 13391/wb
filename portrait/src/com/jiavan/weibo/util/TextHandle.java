@@ -2,6 +2,11 @@ package com.jiavan.weibo.util;
 
 /**
  * Created by Jiavan on 2017/4/23.
+ * <p>
+ * Filter text info.
+ * Some tweets contain some non-utf8 characters, and need filter it.
+ * Like emoji it used utf8mb4 spec, but our database used utf8, so we
+ * need deal them.
  */
 public class TextHandle {
     public static boolean isNotEmojiCharacter(char codePoint) {

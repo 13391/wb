@@ -1,12 +1,14 @@
 package com.jiavan.weibo.entity;
 
 import com.jiavan.weibo.dao.Tweet;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 /**
- * Tweet data info to database
  * Created by Jiavan on 2017/4/23.
+ * <p>
+ * Tweet data info to database
  */
 public class TweetImpl {
     private Connection connection;

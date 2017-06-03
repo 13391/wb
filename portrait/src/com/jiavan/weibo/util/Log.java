@@ -4,14 +4,17 @@ import java.util.Date;
 
 /**
  * Created by Jiavan on 2017/5/10.
+ * <p>
  * Log utils
+ * Include three different levels -> `i`, `w`, `e`.
+ * `i` is information logs like some object to string or request url.
+ * `e` is error, include some exception logs.
+ * `w` it's warning log, will use a special format to print.
+ * <p>
+ * All of logs will attach log's time.
  */
 public class Log {
 
-    /**
-     * log information
-     * @param info
-     */
     public static void i(String info) {
         System.out.println("[INFO] " + new Date().toString() + "\n" + info);
     }

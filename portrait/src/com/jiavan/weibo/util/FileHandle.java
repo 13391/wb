@@ -5,13 +5,17 @@ import java.util.Properties;
 
 /**
  * Created by Jiavan on 2017/4/3.
+ * <p>
  * File operation utils
+ * read or write text files or properties files
  */
 public class FileHandle {
     /**
-     * Write file
+     * Write text file
+     *
      * @param fileName file name and path
-     * @param content file content
+     * @param content  file content
+     * @throws IOException
      */
     public static void write(String fileName, String content) throws IOException {
         File fileHandle = new File(fileName);
@@ -24,8 +28,10 @@ public class FileHandle {
 
     /**
      * Read file content by path
+     *
      * @param path file path
      * @return file content
+     * @throws IOException
      */
     public static String read(String path) throws IOException {
         StringBuilder result = new StringBuilder();
@@ -33,18 +39,20 @@ public class FileHandle {
         InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(fileHandle));
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-        String line = "";
+        String line;
         while ((line = bufferedReader.readLine()) != null) {
             result.append(line);
         }
 
         inputStreamReader.close();
         bufferedReader.close();
+
         return result.toString();
     }
 
     /**
      * Load properties file
+     *
      * @param propName properties filename
      * @throws Exception IOException
      */

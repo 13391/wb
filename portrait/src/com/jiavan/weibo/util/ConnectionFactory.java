@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.util.Properties;
 
 /**
- * MySQL connection factory / singleton
  * Created by Jiavan on 2017/3/29.
+ * <p>
+ * MySQL connection factory / singleton
+ * load mysql config from project config.properties
  */
 public class ConnectionFactory {
     private static String driver;
@@ -30,13 +32,20 @@ public class ConnectionFactory {
         password = prop.getProperty("password");
     }
 
-    private ConnectionFactory() { }
+    private ConnectionFactory() {
+    }
 
     public static ConnectionFactory getInstance() {
         return factory;
     }
 
-    public Connection getConnection() throws Exception{
+    /**
+     * Get a mysql connection from factory
+     *
+     * @return mysql connection
+     * @throws Exception SQLException
+     */
+    public Connection getConnection() throws Exception {
         Class.forName(driver);
         this.connection = DriverManager.getConnection(dburl, user, password);
         return this.connection;

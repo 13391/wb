@@ -1,8 +1,9 @@
 package com.jiavan.weibo.dao;
 
 /**
- * Tweet data to object
  * Created by Jiavan on 2017/4/21.
+ * <p>
+ * Tweet data to object
  */
 public class Tweet {
     private long id;
@@ -23,7 +24,8 @@ public class Tweet {
         this.retweetText = retweetText;
     }
 
-    public Tweet() { }
+    public Tweet() {
+    }
 
     public long getId() {
         return id;

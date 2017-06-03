@@ -6,6 +6,7 @@ import com.jiavan.weibo.util.ConnectionFactory;
 import com.jiavan.weibo.util.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,7 +17,14 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Jiavan on 2017/4/4.
+ * <p>
  * UserInfo Utils
+ * The function of the module is get weibo user information.
+ * Through table `user_entrance` get all user id as a list and
+ * traversal it, and use weibo's api get json format user data.
+ * <p>
+ * Another way to get user info is visit user profile page, and
+ * parse HTML, JavaScript code by regular expression.
  */
 public class UserInfo extends Thread {
 
@@ -30,6 +38,7 @@ public class UserInfo extends Thread {
         this.cf = ConnectionFactory.getInstance();
         this.userCount = 0;
     }
+
     public UserInfo(int index, boolean isProxy) {
         this.index = index;
         this.isProxy = isProxy;
@@ -43,10 +52,14 @@ public class UserInfo extends Thread {
         User user;
         UserImpl userImpl;
         String sql;
+
         try {
             connection = this.cf.getConnection();
             userImpl = new UserImpl(connection);
 
+            /**
+             * Select user count from table `user_entance` and paging.
+             */
             sql = "SELECT COUNT(*) AS count FROM user_entrance";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
@@ -56,7 +69,7 @@ public class UserInfo extends Thread {
             }
 
             for (int i = 0; i <= count / pageCount; i++) {
-                sql = "SELECT uid FROM user_entrance LIMIT " + (i * pageCount) +  ", " + pageCount;
+                sql = "SELECT uid FROM user_entrance LIMIT " + (i * pageCount) + ", " + pageCount;
                 resultSet = statement.executeQuery(sql);
                 System.out.println(sql);
                 while (resultSet.next()) {
@@ -87,7 +100,9 @@ public class UserInfo extends Thread {
     }
 
     /**
-     * Download crawler search page and find user id by username
+     * Visit weibo page and search user by user name, parse page
+     * and get target user's userid.
+     *
      * @param username username
      * @return user id
      * @throws Exception URLEncoder unsupport exception
@@ -105,6 +120,8 @@ public class UserInfo extends Thread {
     }
 
     /**
+     * Get user gender number from text.
+     *
      * @param gender male/female
      * @return 0, 1, 2
      */
@@ -112,13 +129,21 @@ public class UserInfo extends Thread {
 
         if (gender.equals("男")) {
             return 1;
-        } else if (gender.equals("女")){
+        } else if (gender.equals("女")) {
             return 2;
         }
 
         return 0;
     }
 
+    /**
+     * Get user information by weibo user id.
+     *
+     * @param userId  weibo user id
+     * @param isProxy use proxy server or not
+     * @return User instance
+     * @throws Exception Parse m.weibo.cn API and filter info.
+     */
     public static User getUserById(Long userId, boolean isProxy) throws Exception {
 
         User user = new User();
@@ -213,7 +238,13 @@ public class UserInfo extends Thread {
         }
     }
 
-    // Duplicate
+    /**
+     * Duplicate
+     * Get user information by weibo user id
+     *
+     * @param userId weibo user id
+     * @return
+     */
     public static User getUserInfoById(String userId) {
 
         String url = Weibo.URL_USER_CENTER + userId;
@@ -245,8 +276,7 @@ public class UserInfo extends Thread {
             System.out.println("User list json is null");
         }
 
-        System.out.println("page: " + page + " , count: " + count);
-
+        Log.i("page: " + page + " , count: " + count);
         for (int i = 1; i < page; ++i) {
             content = HttpRequest.get(Weibo.getUserListUrl(new Long("3855494782"), i));
             if (!content.equals("")) {
@@ -259,18 +289,19 @@ public class UserInfo extends Thread {
                     String username = user.get("screen_name").toString();
                     String uid = user.get("id").toString();
 
-                    System.out.println(username + uid);
+                    Log.i(username + uid);
                 }
             }
         }
     }
 
     /**
-     * check table `user` whether have uid
-     * @param uid
-     * @param connection
+     * Check table `user` whether have uid
+     *
+     * @param uid        weibo user id
+     * @param connection mysql connection
      * @return
-     * @throws Exception
+     * @throws Exception sql exception
      */
     public static boolean hasUser(long uid, Connection connection) throws Exception {
 

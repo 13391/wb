@@ -11,16 +11,17 @@ import java.sql.Statement;
 import java.util.HashMap;
 
 /**
- * Proxy utils test
  * Created by Jiavan on 2017/5/11.
+ * <p>
+ * Proxy utils test
  */
 public class ProxyTest {
 
     public static void main(String[] args) {
         ProxyTest proxyTest = new ProxyTest();
-        // proxyTest.getRandomProxy();
-        // proxyTest.importProxyFromFile();
-        // proxyTest.clearProxy();
+        proxyTest.getRandomProxy();
+        proxyTest.importProxyFromFile();
+        proxyTest.clearProxy();
         Log.i(HttpRequest.getByProxy("http://httpbin.org/", Proxy.getProxyPool()));
     }
 

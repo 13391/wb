@@ -14,13 +14,15 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * User Tweets deal
  * Created by Jiavan on 2017/5/19.
+ * <p>
+ * User Tweets deal
+ * Use Ansj get keywords from tweets.
  */
 public class TweetDeal {
 
-    public static void main(String[] args) {
-        ConnectionFactory cf = null;
+    public static void main() {
+        ConnectionFactory cf;
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -41,7 +43,7 @@ public class TweetDeal {
             recordCount = resultSet.getInt("count");
 
             for (int i = 0; i <= recordCount / Weibo.MAX_PAGE_RECORD; i++) {
-                sql = "SELECT id, uid, text, retweet_text FROM tweets LIMIT " + (i * Weibo.MAX_PAGE_RECORD) + ", 10000";
+                sql = "SELECT id, uid, text, retweet_text FROM tweets LIMIT " + (i * Weibo.MAX_PAGE_RECORD) + ", " + Weibo.MAX_PAGE_RECORD;
                 resultSet = statement.executeQuery(sql);
 
                 while (resultSet.next()) {
@@ -82,8 +84,9 @@ public class TweetDeal {
 
     /**
      * Get keywords from a string
-     * @param text
-     * @param keywordNum
+     *
+     * @param text target content
+     * @param keywordNum keywords number
      * @return
      */
     public static String getKeyWords(String text, int keywordNum) {

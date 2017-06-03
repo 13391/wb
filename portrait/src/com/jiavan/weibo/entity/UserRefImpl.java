@@ -1,12 +1,14 @@
 package com.jiavan.weibo.entity;
 
 import com.jiavan.weibo.dao.UserRef;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 /**
- * UserRef DAO implement
  * Created by Jiavan on 2017/4/8.
+ * <p>
+ * UserRef DAO implement
  */
 public class UserRefImpl {
     private Connection connection;
@@ -15,6 +17,7 @@ public class UserRefImpl {
     public UserRefImpl(Connection connection) {
         this.connection = connection;
     }
+
     public UserRefImpl(Connection connection, UserRef userRef) {
         this.connection = connection;
         this.userRef = userRef;
@@ -22,6 +25,7 @@ public class UserRefImpl {
 
     /**
      * Insert a UserRef
+     *
      * @param userRef userref instance
      * @return Affected rows
      * @throws Exception SQL exception

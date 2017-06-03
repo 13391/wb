@@ -7,8 +7,10 @@ import com.jiavan.weibo.util.Proxy;
 
 import java.util.HashMap;
 
-/** HttpRequest test suit
+/**
  * Created by Jiavan on 2017/4/3.
+ * <p>
+ * HttpRequest test suit
  */
 public class HttpRequestTest {
     private String url;
@@ -44,7 +46,7 @@ public class HttpRequestTest {
     }
 
     private void getWithQueryString() {
-         this.response = "";
+        this.response = "";
         try {
             this.response = HttpRequest.get(this.url, "is_hot=1", false);
         } catch (Exception e) {
@@ -55,14 +57,13 @@ public class HttpRequestTest {
     }
 
     private void getByProxy() {
-        String content =  HttpRequest.getByProxy(this.url, Proxy.getProxyPool());
-//        String content = HttpRequest.get(this.url, true);
+        String content = HttpRequest.getByProxy(this.url, Proxy.getProxyPool());
         Log.i(content);
     }
 
     public static void main(String[] args) {
-        // HttpRequestTest test = new HttpRequestTest("https://m.weibo.cn/container/getIndex?containerid=2302831642632024_-_INFO");
-        // test.getByProxy();
+        HttpRequestTest test = new HttpRequestTest("https://m.weibo.cn/container/getIndex?containerid=2302831642632024_-_INFO");
+        test.getByProxy();
 
         Log.i(HttpRequest.get("https://m.weibo.cn/api/container/getIndex?containerid=2304133855494782&page=3"));
     }

@@ -17,8 +17,9 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Proxy Server utils
  * Created by Jiavan on 2017/5/11.
+ *
+ * Proxy Server utils
  */
 public class Proxy {
     private String ip;
@@ -33,7 +34,6 @@ public class Proxy {
     /**
      * Get proxy server from database
      * @return
-     * @throws Exception
      */
     public static HashMap<Integer, Proxy> getProxyPool() {
         HashMap<Integer, Proxy> map = new HashMap<>();

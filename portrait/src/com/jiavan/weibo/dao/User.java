@@ -1,8 +1,9 @@
 package com.jiavan.weibo.dao;
 
 /**
- * UserInfo user to object
  * Created by Jiavan on 2017/4/4.
+ * <p>
+ * UserInfo user to object
  */
 public class User {
     private long id;
@@ -53,7 +54,8 @@ public class User {
         this.lastModify = lastModify;
     }
 
-    public User() {}
+    public User() {
+    }
 
     public long getId() {
         return id;

@@ -11,11 +11,12 @@ import java.sql.Statement;
 import java.util.Date;
 
 /**
- * Deal user info and save data to database
  * Created by Jiavan on 2017/5/19.
+ * <p>
+ * Deal user info and save data to database
  */
 public class UserDeal {
-    public static void main(String[] args) {
+    public static void main() {
         ConnectionFactory cf = ConnectionFactory.getInstance();
         Connection connection = null;
         Statement statement = null;
@@ -36,8 +37,9 @@ public class UserDeal {
 
             for (int i = 0; i <= count / Weibo.MAX_PAGE_RECORD; i++) {
 
-                sql = "SELECT uid, address, school FROM user LIMIT " + (i * Weibo.MAX_PAGE_RECORD) + ", 10000";
+                sql = "SELECT uid, address, school FROM user LIMIT " + (i * Weibo.MAX_PAGE_RECORD) + "," + Weibo.MAX_PAGE_RECORD;
                 resultSet = statement.executeQuery(sql);
+
                 while (resultSet.next()) {
                     long uid = resultSet.getLong("uid");
                     String address = resultSet.getString("address");
@@ -75,6 +77,7 @@ public class UserDeal {
 
     /**
      * Get user province from address
+     *
      * @param address
      * @return
      */
@@ -88,6 +91,7 @@ public class UserDeal {
 
     /**
      * Get education level from school
+     *
      * @param school
      * @return
      */

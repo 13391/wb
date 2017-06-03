@@ -4,8 +4,9 @@ import java.util.Properties;
 import java.util.Random;
 
 /**
- * Weibo utils
  * Created by Jiavan on 2017/4/4.
+ *
+ * Weibo Constant and utils
  */
 public class Weibo {
     public static final String URL_SEARCH = "http://s.weibo.com/user/{USERNAME}&Refer=weibo_user";
@@ -27,7 +28,10 @@ public class Weibo {
     public static final int MAX_TWEET = 1000;
     public static final int MAX_PAGE_RECORD = 10000;
 
-    // Get cookie by properties file
+    /**
+     * Get user cookie from file
+     * @return
+     */
     public static String getCookie() {
         Properties prop = null;
         try {
@@ -40,7 +44,10 @@ public class Weibo {
         return "";
     }
 
-    // Get a random user agent
+    /**
+     * Get a random user agent
+     * @return string UA
+     */
     public static String getUserAgent() {
 
         String[] uas = {
@@ -64,6 +71,7 @@ public class Weibo {
 
     /**
      * Get tweet url by weibo user id and page number
+     *
      * @param uid weibo user id
      * @param pageNum page number
      * @return request url

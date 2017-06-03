@@ -1,7 +1,9 @@
 package com.jiavan.weibo.dao;
 
-/** User Reference DTO
+/**
  * Created by Jiavan on 2017/4/8.
+ * <p>
+ * User Reference DAO
  */
 public class UserRef {
     private long uid;
@@ -14,7 +16,8 @@ public class UserRef {
         this.depth = depth;
     }
 
-    public UserRef() { }
+    public UserRef() {
+    }
 
     public long getUid() {
         return uid;

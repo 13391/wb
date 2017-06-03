@@ -6,11 +6,15 @@ import com.jiavan.weibo.util.Log;
 import com.jiavan.weibo.util.Weibo;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
- * Crawler user list
  * Created by Jiavan on 2017/4/8.
+ * <p>
+ * Crawler user list
+ * Get a list of users' concerns. Get a `UserList` instance and set uid
+ * will get this user's concerns username and user id.
  */
 public class UserList {
     private long uid;
@@ -28,6 +32,7 @@ public class UserList {
 
     /**
      * Input parent node userRef, the next depth add one
+     *
      * @param userRef UserRef instance
      */
     public UserList(UserRef userRef) {
@@ -37,7 +42,8 @@ public class UserList {
 
     /**
      * Set a userlist entrance
-     * @param uid weibo user id
+     *
+     * @param uid   weibo user id
      * @param depth this user id current depth
      */
     public UserList(long uid, int depth) {
@@ -48,6 +54,7 @@ public class UserList {
 
     /**
      * Get user ref arraylist by user id
+     *
      * @return userref arraylist
      * @throws Exception
      */
@@ -66,7 +73,6 @@ public class UserList {
                 return null;
             }
 
-            // TODO: 为什么page有时候会少一页
             for (int i = 1; i <= page; ++i) {
                 content = HttpRequest.get(Weibo.getUserListUrl(this.uid, i));
                 if (!content.equals("")) {

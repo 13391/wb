@@ -6,6 +6,7 @@ import com.jiavan.weibo.util.ConnectionFactory;
 import com.jiavan.weibo.util.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -14,10 +15,24 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Crawler Tweet info
  * Created by Jiavan on 2017/4/21.
+ * <p>
+ * Crawler Tweet info
+ * The function of the module is to get user tweets information and store it in the database.
+ * Input a weibo user id, it will get all tweets text information and return a list.
+ * <p>
+ * If user tweets count more than 1000, crawler will skip this user.
  */
 public class TweetInfo {
+
+    /**
+     * Get all tweets through a weibo user id.
+     *
+     * @param uid     weibo user id
+     * @param isProxy use proxy server or not
+     * @return user tweets
+     * @throws Exception IOException, SQLException
+     */
     public static ArrayList<Tweet> getTweetByUid(long uid, boolean isProxy) throws Exception {
 
         ArrayList<Tweet> tweets = new ArrayList<>();
@@ -33,7 +48,7 @@ public class TweetInfo {
                     JSONObject cardlistInfo = (JSONObject) json.get("cardlistInfo");
                     if (cardlistInfo.has("total")) {
                         if (cardlistInfo.getInt("total") > Weibo.MAX_TWEET) {
-                            Log.i("Over 2000 records");
+                            Log.i("More than " + Weibo.MAX_TWEET + " tweets");
                             break;
                         }
                     }
@@ -123,6 +138,14 @@ public class TweetInfo {
         return tweets;
     }
 
+    /**
+     * Insert user tweets into database.
+     *
+     * @param uid        weibo user id
+     * @param connection mysql connection
+     * @param isProxy    use proxy server or not
+     * @throws Exception sql exception
+     */
     public static void crawler(long uid, Connection connection, boolean isProxy) throws Exception {
         TweetImpl tweetImpl = new TweetImpl(connection);
         ArrayList<Tweet> tweets = getTweetByUid(uid, isProxy);
@@ -139,6 +162,9 @@ public class TweetInfo {
         }
     }
 
+    /**
+     * Get `user_entrance` table user's tweets info.
+     */
     public static void main() {
         ConnectionFactory cf = ConnectionFactory.getInstance();
         Connection connection = null;

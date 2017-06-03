@@ -10,11 +10,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * Crawler userRef by depth
  * Created by Jiavan on 2017/4/9.
+ *
+ * Crawler userRef by depth
  */
 public class UserDepth {
-    // user's depth
     private int depth;
 
     public UserDepth(int depth) {

@@ -2,14 +2,16 @@ package com.jiavan.weibo.entity;
 
 import com.jiavan.weibo.dao.User;
 import com.jiavan.weibo.util.Log;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Date;
 
 /**
- * User data access object implement
  * Created by Jiavan on 2017/4/4.
+ * <p>
+ * User data access object implement
  */
 public class UserImpl {
     private Connection connection;
@@ -23,6 +25,7 @@ public class UserImpl {
 
     /**
      * Insert a user data
+     *
      * @param user User entity
      * @return Affect rows
      * @throws Exception SQL exception
@@ -75,6 +78,7 @@ public class UserImpl {
 
     /**
      * Delete a record by crawler uid
+     *
      * @param uid crawler userid
      * @return Affect rows
      * @throws Exception SQL exception
@@ -87,6 +91,7 @@ public class UserImpl {
 
     /**
      * Delete a record by crawler username
+     *
      * @param username UserInfo username
      * @return Affect rows
      * @throws Exception SQL exception
@@ -99,7 +104,7 @@ public class UserImpl {
 
     /**
      * @param statement prepared statement
-     * @param user user entity
+     * @param user      user entity
      * @throws Exception Throw SQL exception
      */
     private void setStatement(PreparedStatement statement, User user) throws Exception {
