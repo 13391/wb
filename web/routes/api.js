@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const { query } = require('../utils/async-db');
 const request = require('superagent');
+const util = require('util');
 
 let api = new Router();
 api.get('/getUserGender.json', async (ctx) => {
@@ -112,6 +113,46 @@ api.get('/getUserTag.json', async (ctx) => {
 api.get('/getUserInfo.json', async (ctx) => {
     let res = await request.get('https://m.weibo.cn/api/container/getIndex?type=uid&value=3855494782&containerid=1005053855494782');
     ctx.body = res.body;
+});
+
+api.get('/getUserBySearch.json', async (ctx) => {
+    let type = ctx.query.type;
+    let username = ctx.query.username;
+    let body = {};
+    
+    if (type === 'userinfo' && username) {
+        let encodeUsername = encodeURIComponent(username);
+        let url = `https://m.weibo.cn/api/container/getIndex?type=user&containerid=100103type%3D3%26q%3D${encodeUsername}`;
+        let res = await request.get(url);
+
+        if (res.body.cards.length) {
+            let uid = res.body.cards[1].card_group[0].user.id;
+            res = await request.get(`https://m.weibo.cn/api/container/getIndex?type=uid&value=${uid}&containerid=100505${uid}`);
+            body = res.body
+        }
+    } else if (type === 'portrait' && username) {
+        let sql = `select created_at, source from tweets where uid=(select uid from user where username='${username}')`;
+        let ret = await query(sql);
+
+        let createdData = [];
+        let sourceData = [];
+        let total = ret.length;
+
+        for (let i = 0; i < 24; i++) {
+            createdData[i] = 0;
+        }
+        ret.forEach((item) => {
+            let date = new Date(item.created_at);
+            let hour = date.getHours();
+            createdData[hour]++; 
+        });
+
+        sql = `select source, count(source) as count from tweets where uid=(select uid from user where username='${username}') group by source order by count desc limit 10`;
+        sourceData = await query(sql);
+        body = {total, createdData, sourceData};
+    }
+    
+    ctx.body = body;
 });
 
 

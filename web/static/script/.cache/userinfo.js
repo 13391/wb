@@ -1,11 +1,9 @@
-/*TMODJS:{"version":16,"md5":"ce12f999a7f4a72e8da4d77369d50d27"}*/
+/*TMODJS:{"version":22,"md5":"f07ceb3dcb24a5b17fdbe4ff04f366a4"}*/
 template('userInfo',function($data,$filename
 /**/) {
-'use strict';var $utils=this,$helpers=$utils.$helpers,$escape=$utils.$escape,cover_image_phone=$data.cover_image_phone,profile_url=$data.profile_url,profile_image_url=$data.profile_image_url,id=$data.id,screen_name=$data.screen_name,description=$data.description,gender=$data.gender,urank=$data.urank,followers_count=$data.followers_count,follow_count=$data.follow_count,$out='';$out+='<div class="userinfo" style="background-image: url(';
-$out+=$escape(cover_image_phone);
-$out+=')"> <div class="avatar"> <a href="';
+'use strict';var $utils=this,$helpers=$utils.$helpers,$escape=$utils.$escape,profile_url=$data.profile_url,profile_image_url=$data.profile_image_url,id=$data.id,screen_name=$data.screen_name,description=$data.description,gender=$data.gender,urank=$data.urank,followers_count=$data.followers_count,follow_count=$data.follow_count,$out='';$out+='<div class="userinfo"> <div class="avatar"> <a href="';
 $out+=$escape(profile_url);
-$out+='"><img src="';
+$out+='" target="_blank"><img src="';
 $out+=$escape(profile_image_url);
 $out+='"></a> </div> <ul> <li><span>ID</span> ';
 $out+=$escape(id);

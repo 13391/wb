@@ -17,7 +17,7 @@ require(['./d3-mod/userGender',
               flare,
               userInfo) {
 
-            userInfo.render();
+        userInfo.render();
         userGender.draw();
         flare.draw();
         userTag.draw();
@@ -26,7 +26,7 @@ require(['./d3-mod/userGender',
         userSchool.draw();
         userAddress.draw();
         userCompany.draw();
-            $(document).on('click', '.list-nav .item', function () {
-                    $(this).addClass('active').siblings().removeClass('active');
-            })
+        $(document).on('click', '.list-nav .item', function () {
+            $(this).addClass('active').siblings().removeClass('active');
+        })
     });
