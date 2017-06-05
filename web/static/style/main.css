@@ -59,13 +59,12 @@ a, a:visited {
     position: relative;
     overflow: hidden;
     width: 800px;
-    border-top: 1px solid red;
     margin: auto;
 }
 
 .charts > section + section {
     margin: 50px 0 0 150px;
-    padding: 100px 0 0 100px;
+    padding: 100px 0 0 110px;
 }
 
 .charts > section > div {
@@ -75,24 +74,41 @@ a, a:visited {
 .charts .chart-flare > div {
     float: left;
 }
+
+.charts .chart-flare .svg-container {
+    margin-left: 0;
+}
+
 .charts .chart-flare .description {
     width: 30%;
-    margin: 0;
+    margin: 40px 0 0;
     line-height: 1.5;
     font-size: 18px;
     text-indent: 2em;
     float: right;
+    white-space: pre-line;
+    word-break: break-all;
+    color: honeydew;
 }
 .chart-flare .svg-container {
     width: 60%;
 }
 
-.chart-user {
-    min-height: 800px;
+.charts .svg-container {
+    margin-left: 30px;
+}
+
+.chart-gender div.description,
+.chart-education div.description {
+    margin-left: 100px;
 }
 .chart-user .content {
     width: 100%;
     height: 100%;
+}
+
+.chart-user .portrait > section {
+    margin-top: 50px;
 }
 
 .chart-user .content .userinfo {
@@ -137,15 +153,18 @@ a, a:visited {
     border-radius: 4px;
     border: hidden;
     outline: none;
-    background: #333;
-    color: #999;
+    background: rgba(100, 100, 100, .5);
+    color: steelblue;
+    font-weight: bolder;
     padding-left: 10px;
     font-size: 16px;
     vertical-align: bottom;
 }
 .chart-user .header .search {
     display: inline-block;
-    background: #666;
+    background: steelblue;
+    color: #fefefe;
+    font-size: 14px;
     padding: 5px 10px;
     border-radius: 2px;
     cursor: pointer;
@@ -161,15 +180,27 @@ a, a:visited {
     font-size: 1.2rem;
 }
 
+.chart-user .introduction {
+    margin-top: 100px;
+}
+
 .chart-user .content {
     margin-top: 10px;
     text-align: center;
-    border: 1px solid white;
+}
+
+.chart-user .keywords {
+    display: inline-block;
+    margin: 20px;
+}
+
+.chart-user .portrait .introduction {
+    margin-top: 100px;
 }
 
 .charts .description {
-    margin-left: 50px;
-    padding-top: 30px;
+    margin-left: 30px;
+    padding-top: 20px;
 }
 
 .charts .title {
@@ -249,4 +280,27 @@ a, a:visited {
 
 .description .title {
     text-decoration: underline;
+}
+
+.interpolation {
+    font-size: 12px;
+    padding: 2px 5px;
+    color: #fefefe;
+    cursor: pointer;
+    background: steelblue;
+    border-radius: 2px;
+}
+.tip {
+    font-size: 12px;
+}
+
+.footer {
+    margin-top: 150px;
+    text-align: center;
+    color: #999999;
+    font-size: 14px;
+}
+
+.footer a {
+    font-weight: bolder;
 }

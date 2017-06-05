@@ -13,11 +13,11 @@ define(function () {
     function render(data) {
         data = JSON.parse(data);
 
-        var width = 800;
+        var width = 700;
         var height = 400;
 
         //在 body 里添加一个 SVG 画布
-        var svg = d3.select('.chart-tag')
+        var svg = d3.select('.chart-tag .svg-container')
             .append('svg')
             .attr('width', width)
             .attr('height', height);

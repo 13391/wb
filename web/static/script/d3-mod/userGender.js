@@ -15,8 +15,8 @@ define(function () {
         data = JSON.parse(data);
 
         var dataset = data.groups;
-        var width = 330;
-        var height = 330;
+        var width = 300;
+        var height = 300;
 
         var svg = d3.select('.chart-gender .svg-container')
             .append('svg')
@@ -40,7 +40,7 @@ define(function () {
                 return d.count;
             });
         var pieData = pie(dataset);
-        var radius = 155;
+        var radius = 150;
         var arc = d3.svg.arc()
             .innerRadius(0)
             .outerRadius(radius);

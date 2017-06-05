@@ -39,3 +39,15 @@ text {
     text-anchor: middle;
     font-size: 10px;
 }
+
+.axis path,
+.axis line,
+.line {
+    fill: none;
+}
+
+.broken-line path,
+.broken-line line,
+.broken-line .line {
+    stroke: #fefefe;
+}

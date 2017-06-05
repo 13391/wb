@@ -43,7 +43,7 @@ public class Main {
                 TweetInfo.main();
             } else if (input.equals("deal_users")) {
                 UserDeal.main();
-            } else if (input.equals("dea")) {
+            } else if (input.equals("deal_tweets")) {
                 TweetDeal.main();
             } else if (input.equals("deal")) {
                 UserDeal.main();

@@ -10,6 +10,6 @@ then
 	scp -P 27528 -r ./out root@23.106.131.249:~/weibo-portrait
 elif [ $node == c3 ]
 then
-    scp -r ./out root@39.108.48.21:~/weibo-portrait-crawler
+    scp -r ./out root@39.108.48.21:~/weibo-portrait-crawler-final
 fi
 

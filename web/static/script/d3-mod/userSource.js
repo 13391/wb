@@ -1,11 +1,10 @@
 /**
- * 用户学校
+ * Created by Jiavan on 2017/6/5.
  */
-
 define(function () {
     function draw() {
         $.ajax({
-            url: 'api/getUserSchool.json',
+            url: 'api/getUserSource.json',
             success: render
         });
     }
@@ -16,23 +15,25 @@ define(function () {
         var width = 700;
         var height = 400;
 
-        var svg = d3.select('.chart-school .svg-container')
+        //在 body 里添加一个 SVG 画布
+        var svg = d3.select('.chart-source .svg-container')
             .append('svg')
             .attr('width', width)
             .attr('height', height);
 
+        //画布周边的空白
         var padding = {
             left: 30,
             right: 30,
             top: 20,
-            bottom: 20
+            bottom: 50
         };
 
         var dataset = [];
-        var schools = [];
-        data.groups.forEach(function (item) {
-            dataset.push(item.count);
-            schools.push(item.school);
+        var sources = [];
+        data.groups.forEach(function(i) {
+            dataset.push(i.count);
+            sources.push(i.source);
         });
 
         var xScale = d3.scale.ordinal()
@@ -48,14 +49,16 @@ define(function () {
             .orient('bottom')
             .tickValues(d3.range(dataset.length))
             .tickFormat(function(d, i) {
-                return schools[i];
+                return d + 1;
             });
+
         var yAxis = d3.svg.axis()
             .scale(yScale)
             .orient('left');
 
         var rectPadding = 10;
-        var colors = d3.scale.category20();
+
+        var colors = d3.scale.category10();
         data.groups.forEach(function (item, idx) {
             item.color = colors(idx);
         });
@@ -79,6 +82,7 @@ define(function () {
                 return height - padding.top - padding.bottom - yScale(d);
             });
 
+        //添加文字元素
         var texts = svg.selectAll('.rect-text')
             .data(dataset)
             .enter()
@@ -89,30 +93,22 @@ define(function () {
                 return xScale(i) + rectPadding / 2;
             })
             .attr('y', function (d) {
-                return yScale(d);
+                return yScale(d) - 5;
             })
             .attr('dx', function () {
                 return (xScale.rangeBand() - rectPadding) / 2;
             })
-            .attr('dy', function (d) {
-                return 20;
-            })
-            .text(function (d) {
-                return d;
+            .text(function (d, idx) {
+                return sources[idx];
             });
-
         svg.append('g')
             .attr('class', 'axis')
             .attr('transform', 'translate(' + padding.left + ',' + (height - padding.bottom) + ')')
             .call(xAxis);
 
-        svg.append('g')
-            .attr('class', 'axis')
-            .attr('transform', 'translate(' + padding.left + ',' + padding.top + ')')
-            .call(yAxis);
 
 
-        $('.chart-school').append(template('userSchool', data));
+        $('.chart-source').append(template('userSource', data));
     }
 
     return {

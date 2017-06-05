@@ -1,5 +1,6 @@
 package com.jiavan.weibo.portrait.user;
 
+import com.jiavan.weibo.portrait.tweet.TweetDeal;
 import com.jiavan.weibo.util.ConnectionFactory;
 import com.jiavan.weibo.util.Log;
 import com.jiavan.weibo.util.Weibo;
@@ -42,6 +43,7 @@ public class UserDeal {
 
                 while (resultSet.next()) {
                     long uid = resultSet.getLong("uid");
+                    Log.i("Start deal uid -> " + uid);
                     String address = resultSet.getString("address");
                     String school = resultSet.getString("school");
 
@@ -52,10 +54,51 @@ public class UserDeal {
                     state.setString(3, getEducation(school));
                     state.executeUpdate();
 
+                    /**
+                     * Get user all tweets from table `tweets_deal`
+                     * update user_deal and set keywords value is user
+                     * all tweets keywords
+                     */
+                    try {
+                        sql = "SELECT text, retext FROM tweets_deal WHERE uid=" + uid;
+                        Statement tweetsState = connection.createStatement();
+                        ResultSet tweetsRet = tweetsState.executeQuery(sql);
+                        String allContent = "", keywords = "";
+
+                        if (tweetsRet.next()) {
+                            tweetsRet.previous();
+                            while (tweetsRet.next()) {
+                                allContent += tweetsRet.getString("text");
+                            }
+                            keywords = TweetDeal.getKeyWords(allContent, 10);
+                            sql = "UPDATE user_deal SET keywords='" + keywords + "' WHERE uid=" + uid;
+                            tweetsState.executeUpdate(sql);
+                        }
+
+                        sql = "SELECT source, count(source) as count FROM tweets WHERE uid=" + uid + " GROUP BY source  ORDER BY count DESC LIMIT 1";
+                        tweetsRet = tweetsState.executeQuery(sql);
+                        if (tweetsRet.next()) {
+                            String source = tweetsRet.getString("source");
+                            sql = "UPDATE user_deal SET source='" + source + "' WHERE uid=" + uid;
+                            tweetsState.executeUpdate(sql);
+                        }
+
+                        tweetsRet.close();
+                        tweetsState.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e("set user portrait error uid->" + uid);
+                    }
+
                     state.close();
                 }
             }
 
+            UserDeal.dealCompany(connection, "小米", "小米");
+            UserDeal.dealCompany(connection, "微软", "微软");
+            UserDeal.dealCompany(connection, "淘宝", "阿里巴巴");
+            UserDeal.dealCompany(connection, "新浪", "新浪");
+            UserDeal.dealCompany(connection, "微博", "新浪");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("Database error");
@@ -73,6 +116,13 @@ public class UserDeal {
             Log.i("Spend time: " + ((endTime.getTime() - startTime.getTime()) / 1000) + "s");
             Log.w("Complete Deal");
         }
+    }
+
+    public static void dealCompany(Connection connection, String key, String value) throws Exception {
+        Log.i("Start deal company " + value);
+        String sql = "UPDATE user SET company='" + value + "' WHERE company like '%" + key + "%'";
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(sql);
     }
 
     /**

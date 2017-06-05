@@ -1,0 +1,10 @@
+<div class="description">
+    <div class="title">微博发送来源</div>
+    <div class="detail">
+        <p>在爬取的用户中以来源次数最多的设备或应用作为该用户的微博主要来源，共有 <span class="keyword">{{total}}</span> 种不同的来源，其中前三分别为：
+        {{each groups as item idx}}
+            {{if idx < 3}}<span class="keyword">{{item.source}}</span>{{/if}}
+            {{if idx < 2}}、{{/if}}
+        {{/each}}
+    </div>
+</div>

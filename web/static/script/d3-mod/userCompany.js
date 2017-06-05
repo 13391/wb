@@ -13,7 +13,7 @@ define(function () {
     function render(data) {
         data = JSON.parse(data);
 
-        var width = 800;
+        var width = 700;
         var height = 400;
 
         var svg = d3.select('.chart-company .svg-container')

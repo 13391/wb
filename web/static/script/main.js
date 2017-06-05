@@ -6,7 +6,8 @@ require(['./d3-mod/userGender',
         './d3-mod/userCredit',
         './d3-mod/userTag',
         './d3-mod/flare',
-        './d3-mod/userInfo'],
+        './d3-mod/userInfo',
+        './d3-mod/userSource'],
     function (userGender,
               userAddress,
               userCompany,
@@ -15,7 +16,8 @@ require(['./d3-mod/userGender',
               userCredit,
               userTag,
               flare,
-              userInfo) {
+              userInfo,
+              userSource) {
 
         userInfo.render();
         userGender.draw();
@@ -26,6 +28,8 @@ require(['./d3-mod/userGender',
         userSchool.draw();
         userAddress.draw();
         userCompany.draw();
+        userSource.draw();
+
         $(document).on('click', '.list-nav .item', function () {
             $(this).addClass('active').siblings().removeClass('active');
         })

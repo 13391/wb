@@ -19,8 +19,8 @@ define(function () {
             chartData.push(i.count);
         });
 
-        var width = 350,
-            height = 350,
+        var width = 300,
+            height = 300,
             radius = Math.min(width, height) / 2 - 10;
 
         var color = d3.scale.category10();
