@@ -12,6 +12,7 @@ body {
 .container {
     background: rgba(33,41,52,.9);
     overflow: hidden;
+    min-width: 1200px;
 }
 
 ul, li {

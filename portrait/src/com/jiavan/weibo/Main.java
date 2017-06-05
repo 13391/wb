@@ -46,8 +46,8 @@ public class Main {
             } else if (input.equals("deal_tweets")) {
                 TweetDeal.main();
             } else if (input.equals("deal")) {
-                UserDeal.main();
                 TweetDeal.main();
+                UserDeal.main();
             }
         } else {
             Log.i("No params input!");
