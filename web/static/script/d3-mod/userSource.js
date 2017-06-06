@@ -21,7 +21,6 @@ define(function () {
             .attr('width', width)
             .attr('height', height);
 
-        //画布周边的空白
         var padding = {
             left: 30,
             right: 30,

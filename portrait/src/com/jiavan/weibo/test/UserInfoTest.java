@@ -12,7 +12,7 @@ import com.jiavan.weibo.util.Log;
 public class UserInfoTest {
     public static void main(String[] args) {
         try {
-            User user = UserInfo.getUserById(new Long("5613198473"), false);
+            User user = UserInfo.getUserById(new Long("3855494782"), false);
             Log.i(user.toString());
         } catch (Exception e) {
             e.printStackTrace();

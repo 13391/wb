@@ -18,7 +18,6 @@ define(function () {
         var width = 800;
         var height = 400;
 
-        //在 body 里添加一个 SVG 画布   
         var svg = d3.select('.chart-address')
             .append('svg')
             .attr('width', width)
@@ -32,7 +31,6 @@ define(function () {
             bottom: 50
         };
 
-        //定义一个数组
         var dataset = [];
         data.forEach(function(i) {
             dataset.push(i.count);
@@ -40,7 +38,7 @@ define(function () {
 
         var xScale = d3.scale.ordinal()
             .domain(d3.range(dataset.length))
-            .rangeRoundBands([0, width - padding.left - padding.right]);
+            .rangeRoundBands([0, width - padding.left - padding.right]); // 指定输出范围为连续区间，区间段的起点均为整数
 
         var yScale = d3.scale.linear()
             .domain([0, d3.max(dataset)])

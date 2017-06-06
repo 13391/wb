@@ -28,9 +28,12 @@ define(function () {
         data.groups.forEach(function (item, idx) {
             item.color = color(idx);
         });
+
+        // 生成圆弧
         var arc = d3.svg.arc()
             .outerRadius(radius);
 
+        // 构造一个新的默认的饼布局
         var pie = d3.layout.pie();
 
         var svg = d3.select('.chart-credit .svg-container').append('svg')
@@ -63,6 +66,7 @@ define(function () {
 
         function tweenPie(b) {
             b.innerRadius = 0;
+            // 返回一个介于a和b之间的默认插值器
             var i = d3.interpolate({
                 startAngle: 0,
                 endAngle: 0

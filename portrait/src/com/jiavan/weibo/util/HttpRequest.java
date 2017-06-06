@@ -310,6 +310,7 @@ public class HttpRequest {
     /**
      * Trust all https type request
      *
+     * http://blog.csdn.net/lizeyang/article/details/18983843
      * @throws Exception Network IOException
      */
     private static void trustAllHttpsCertificates() throws Exception {
