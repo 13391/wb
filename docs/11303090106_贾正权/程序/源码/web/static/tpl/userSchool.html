@@ -1,0 +1,11 @@
+<div class="description">
+    <div class="title">用户毕业高校数量排名</div>
+    <div class="detail">
+        <p>在用户集合中共有 <span class="keyword">{{total}}</span> 位用户具有学校属性，共有 <span class="keyword">{{schoolCount}} </span>所不同的学校，其中前五位分别为:</p>
+        {{each groups as group idx}}
+            {{if idx < 5}}<span> <span style="color: {{group.color}}; font-weight: bold">{{group.school}}</span> 有{{group.count}}人，占比 <span class="keyword">{{(group.rate * 100).toFixed(2)}}%</span></span>
+        {{if idx!==4}}、{{/if}}
+        {{/if}}
+        {{/each}}
+    </div>
+</div>

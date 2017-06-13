@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-cmn">
+<head>
+    <meta charset="UTF-8">
+    <title>网络信息抓取以及处理系统-可视化平台</title>
+    <!-- css -->
+    <link rel="stylesheet" href="./style/normalize.css">
+    <link rel="stylesheet" href="./style/svg.css">
+    <link rel="stylesheet" href="./style/main.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header"><h1>微博用户信息抓取及处理-数据可视化</h1></header>
+        <ul class="list-nav scroll-spy">
+            <li class="item active"><a href="#user">用户信息</a></li>
+            <li class="item"><a href="#gender">用户性别</a></li>
+            <li class="item"><a href="#address">用户区域</a></li>
+            <li class="item"><a href="#company">用户公司</a></li>
+            <li class="item"><a href="#education">学历分布</a></li>
+            <li class="item"><a href="#school">用户学校</a></li>
+            <li class="item"><a href="#tag">用户标签</a></li>
+            <li class="item"><a href="#credit">信用分布</a></li>
+            <li class="item"><a href="#source">微博来源</a></li>
+        </ul>
+        <section class="charts">
+            <section id="flare" class="chart-flare scroll-spy-item">
+                <div class="description">
+                    <h3>系统以个人用户关注列表为入口，广度遍历用户关注列表，爬虫采集超过 <span class="keyword">300000</span> 位微博用户基本信息，<span class="keyword">4000000</span> 条微博内容记录，1GB+文本数据，以丰富的图表进行可视化展现，源码
+                        <a href="https://github.com/13391/wb">https://github.com/13391/wb</a></h3>
+                </div>
+                <div class="svg-container"></div>
+            </section>
+            <section id="user" class="chart-user scroll-spy-item">
+                <div class="header">
+                    <input type="text" placeholder="甲烷艾特"><span class="search search-info">个人资料</span><span class="search search-portrait">数据分析</span>
+                </div>
+                <div class="content"></div>
+            </section>
+            <section id="gender" class="chart-gender scroll-spy-item">
+                <div class="svg-container"></div>
+            </section>
+            <section id="address" class="chart-address scroll-spy-item">
+                <div class="svg-container"></div>
+            </section>
+            <section id="company" class="chart-company scroll-spy-item">
+                <div class="svg-container"></div>
+            </section>
+            <section id="education" class="chart-education scroll-spy-item">
+                <div class="svg-container"></div>
+            </section>
+            <section id="school" class="chart-school scroll-spy-item">
+                <div class="svg-container"></div>
+            </section>
+            <section id="tag" class="chart-tag scroll-spy-item">
+                <div class="svg-container"></div>
+            </section>
+            <section id="credit" class="chart-credit scroll-spy-item">
+                <div class="svg-container"></div>
+            </section>
+            <section id="source" class="chart-source scroll-spy-item">
+                <div class="svg-container"></div>
+            </section>
+        </section>
+        <footer class="footer">
+            <p>©2017 <a href="https://github.com/Jiavan">Jiavan</a> Weibo data visualization: <a href="https://github.com/13391/wb">git@github.com:13391/wb.git</a> Release under
+                <a href="https://github.com/13391/wb/blob/master/LICENSE">MIT</a></p>
+        </footer>
+    </div>
+    <script src="script/lib/d3.v3.js"></script>
+    <script src="script/lib/zepto.js"></script>
+    <script src="script/template.js"></script>
+    <script src="script/lib/require.js" data-main="script/main"></script>
+</body>
+</html>

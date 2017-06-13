@@ -1,0 +1,31 @@
+<div class="portrait">
+    <section class="introduction">
+        {{each keywords as item idx}}
+        <span class="keywords" style="color: {{item.color}}; display: inline-block; font-size: {{item.size}}px; transform: rotate({{item.angle}}deg)">{{item.value}}</span>
+        {{/each}}
+        <p class="keyword">{{introduction}}</p>
+    </section>
+    <section class="created broken-line">
+        <div class="svg-container"></div>
+        <span class="interpolation">linear</span>
+        <span class="interpolation">linear-closed</span>
+        <span class="interpolation">basis</span>
+        <span class="interpolation">step-after</span>
+        <span class="interpolation">bundle</span>
+        <span class="interpolation">monotone</span>
+        <span class="interpolation">cardinal</span>
+        <div class="description">
+            <span>通过对该用户不同时间段发送微博数量进行分析，其每天最为活跃的时间段为 <span class="keyword">{{period}}~{{period+1}}</span>点</span>
+        </div>
+    </section>
+    <section class="source">
+        <div class="svg-container"></div>
+        <div class="description">
+            <span>该用户微博发送来源前三的设备或者应用是
+            {{each sourceData as item idx}}
+                {{if idx < 3}}<span class="keyword">{{item.source}}</span>{{if idx<2}}、{{/if}}{{/if}}
+            {{/each}}
+            </span>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,9 @@
+<div class="description">
+    <div class="title">用户信用情况</div>
+    <div class="detail">
+        <p>在拥有信用记录的 <span class="keyword">{{total}}</span> 位用户中</p>
+        {{each groups as group}}
+            {{if group.count !== 0}}<p> <span style="color: {{group.color}}; font-weight: bold">{{group.credit}}</span> 有{{group.count}}人，占比 <span class="keyword">{{(group.rate * 100).toFixed(3)}}%</span></p>{{/if}}
+        {{/each}}
+    </div>
+</div>
